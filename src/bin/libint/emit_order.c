@@ -177,11 +177,11 @@ void emit_order()
       if (to_inline_into_hrr)
 	fprintf(hrr_code,"#include \"%s\"\n",vrr_code_name);
       else
-	fprintf(hrr_code,"extern void vrr_order_%c%c%c%c(Libint_t*, prim_data*);\n\n",
+	fprintf(hrr_code,"extern void vrr_order_%c%c%c%c(Libint1_t*, prim_data*);\n\n",
 		am_letter[la-lb],am_letter[lb],am_letter[lc-ld],am_letter[ld]);
       fprintf(hrr_code,"  /* Computes quartets of (%c%c|%c%c) integrals */\n\n",
 	      am_letter[la-lb],am_letter[lb],am_letter[lc-ld],am_letter[ld]);
-      fprintf(hrr_code,"REALTYPE *%s(Libint_t *Libint, int num_prim_comb)\n{\n",hrr_function_name);
+      fprintf(hrr_code,"REALTYPE *%s(Libint1_t *Libint, int num_prim_comb)\n{\n",hrr_function_name);
       fprintf(hrr_code," prim_data *Data = Libint->PrimQuartet;\n");
       fprintf(hrr_code," REALTYPE *int_stack = Libint->int_stack;\n");
       fprintf(hrr_code," int i;\n\n");
@@ -189,7 +189,7 @@ void emit_order()
       /*-------------------------------------------------------------
 	Include the function into the hrr_header.h and init_libint.c
        -------------------------------------------------------------*/
-      fprintf(hrr_header,"REALTYPE *%s(Libint_t *, int);\n",hrr_function_name);
+      fprintf(hrr_header,"REALTYPE *%s(Libint1_t *, int);\n",hrr_function_name);
       fprintf(init_code,"  build_eri[%d][%d][%d][%d] = %s;\n",la-lb,lb,lc-ld,ld,hrr_function_name);
 
       /*-----------------------------------
@@ -206,7 +206,7 @@ void emit_order()
 	      am_letter[la-lb],am_letter[lb],am_letter[lc-ld],am_letter[ld]);
       if (to_inline_into_hrr)
 	fprintf(vrr_code,"inline ");
-      fprintf(vrr_code,"void %s(Libint_t * Libint, prim_data *Data)\n{\n",vrr_function_name);
+      fprintf(vrr_code,"void %s(Libint1_t * Libint, prim_data *Data)\n{\n",vrr_function_name);
 
       /*----------------------------
 	Zero out the hashing tables
